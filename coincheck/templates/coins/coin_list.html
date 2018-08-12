@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Market Cap</th>
+            <th scope="col">Price</th>
+            <th scope="col">Volume (24h)</th>
+            <th scope="col">Circulating Supply</th>
+            <th scope="col">Change (1h)</th>
+            <th scope="col">Change (24h)</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for id, coin in crypto_data.data.items %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td><a href="{% url 'coins:coin_detail' coin.website_slug coin.id %}">{{ coin.name }}</a></td>
+                <td>$ {{ coin.quotes.USD.market_cap }}</td>
+                <td>$ {{ coin.quotes.USD.price }}</td>
+                <td>$ {{ coin.quotes.USD.volume_24h }}</td>
+                <td>{{ coin.circulating_supply }} {{ coin.symbol }}</td>
+
+                {% if coin.quotes.USD.percent_change_1h >= 0 %}
+                    <td class="green-text">{{ coin.quotes.USD.percent_change_1h }} %</td>
+                {% else %}
+                    <td class="red-text">{{ coin.quotes.USD.percent_change_1h }} %</td>
+                {% endif %}
+
+                {% if coin.quotes.USD.percent_change_24h >= 0 %}
+                    <td class="green-text">{{ coin.quotes.USD.percent_change_24h }} %</td>
+                {% else %}
+                    <td class="red-text">{{ coin.quotes.USD.percent_change_24h }} %</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

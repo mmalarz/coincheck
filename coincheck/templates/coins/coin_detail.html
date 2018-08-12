@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} - {{ coin.data.name }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col s4">
+            <h3><img src="{{ picture }}"> {{ coin.data.name }}</h3>
+            <h5>Rank: {{ coin.data.rank }}</h5>
+        </div>
+
+        <div class="col s4">
+            <br>
+            <br>
+            <p>Market Cap: $ {{ coin.data.quotes.USD.market_cap }}</p>
+            <p>Price: $ {{ coin.data.quotes.USD.price }}</p>
+            <p>Volume (24h): $ {{ coin.data.quotes.USD.volume_24h }}</p>
+            <p>Circulating supply: {{ coin.data.circulating_supply }} {{ coin.data.symbol }}</p>
+
+            {% if coin.data.quotes.USD.percent_change_1h >= 0 %}
+                <p>Change (1h): <span class="green-text">{{ coin.data.quotes.USD.percent_change_1h }} %</span></p>
+            {% else %}
+                <p>Change (1h): <span class="red-text">{{ coin.data.quotes.USD.percent_change_1h }} %</span></p>
+            {% endif %}
+
+            {% if coin.data.quotes.USD.percent_change_24h >= 0 %}
+                <p>Change (24h): <span class="green-text">{{ coin.data.quotes.USD.percent_change_24h }} %</span>
+                </p>
+            {% else %}
+                <p>Change (24h): <span class="red-text">{{ coin.data.quotes.USD.percent_change_24h }} %</span>
+                </p>
+            {% endif %}
+        </div>
+
+        <div class="col s4">
+            <br>
+            <br>
+            <a href="{% url 'coins:download_csv' coin.data.website_slug %}" type="button"
+               class="btn btn-primary">Download HTML file</a>&nbsp;&nbsp; with all historical data
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <h3 class="center-align">Monthly data for {{ coin.data.name }}</h3>
+    <br>
+
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Open</th>
+            <th scope="col">High</th>
+            <th scope="col">Low</th>
+            <th scope="col">Close</th>
+            <th scope="col">Volume</th>
+            <th scope="col">Market Cap</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for coin in data %}
+            <tr>
+                <td>{{ coin.0 }}</td>
+                <td>$ {{ coin.1 }}</td>
+                <td>$ {{ coin.2 }}</td>
+                <td>$ {{ coin.3 }}</td>
+                <td>$ {{ coin.4 }}</td>
+                <td>$ {{ coin.5 }}</td>
+                <td>$ {{ coin.6 }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

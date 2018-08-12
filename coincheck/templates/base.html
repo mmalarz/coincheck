@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <title>CoinCheck {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+    <link type="text/css" href="{% static "css/style.css" %}" rel="stylesheet ">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+<div class="navbar-fixed">
+<nav>
+    <div class="nav-wrapper">
+        <a href="{% url "coins:coin_list" %}" class="brand-logo logo">CoinCheck</a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+</nav>
+</div>
+<ul class="sidenav" id="mobile-demo">
+
+</ul>
+<div class="container" style="padding: 0;">
+    {% block content %}
+
+    {% endblock %}
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let elems = document.querySelectorAll('.sidenav');
+        let instances = M.Sidenav.init(elems, {});
+    });
+</script>
+</body>
+</html>
